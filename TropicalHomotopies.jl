@@ -1,3 +1,5 @@
+using Oscar
+import HomotopyContinuation as HC
 
 
 @doc raw"""
