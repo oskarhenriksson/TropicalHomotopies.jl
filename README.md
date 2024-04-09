@@ -11,7 +11,7 @@ The easiest way to get started using this is to download the project, and run
 include(path_to_TropicalHomotopies.jl)
 ```
 
-## Example
+## Examples
 Consider the following system:
 ```
 Qx, x = polynomial_ring(QQ,"x"=>1:3);
