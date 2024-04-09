@@ -2,6 +2,8 @@
 This projects implement a general framework for computing solving polynomial systems numerically, 
 based on homotopies constructed from certain tropical stable intersections.
 
+It uses functionality from Oscar.jl and HomotopyContinuation.jl.
+
 ## Installation
 The easiest way to get started using this is to download the project, and run
 
