@@ -1,5 +1,5 @@
 # TropicalHomotopies.jl
-This projects implement a general framework for computing solving polynomial systems numerically, 
+This project implements a general framework for computing solving polynomial systems numerically, 
 based on homotopies constructed from certain tropical stable intersections.
 
 It uses functionality from Oscar.jl and HomotopyContinuation.jl.
