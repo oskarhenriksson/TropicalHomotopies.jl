@@ -5,11 +5,12 @@ based on homotopies constructed from certain tropical stable intersections.
 It uses functionality from Oscar.jl and HomotopyContinuation.jl.
 
 ## Installation
-The easiest way to get started using this is to download the project, and run
+The easiest way to get started using the contents of this is to manually download all files, and then run
 
 ```
-include(path_to_TropicalHomotopies.jl)
+include(TropicalHomotopies.jl)
 ```
+where `TropicalHomotopies.jl` is replaced by the path to the file `TropicalHomotopies.jl`.
 
 ## Examples
 Consider the following system:
@@ -33,7 +34,7 @@ A sharper bound is obtained as follows:
 systems = linear_and_binomial_part(F)
 tropical_stable_intersection_with_homotopy_data(systems)[1]
 ```
-and the corresponding homotopies are given by
+To use the associated generalized homotopies to solve the system, we run
 ```
 tropical_solve(systems)
 ```
