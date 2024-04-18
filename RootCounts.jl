@@ -84,13 +84,6 @@ function tropical_stable_intersection_after_perturbation(Sigmas::Vector{<:Oscar.
 end
 
 
-"""
-    tropical_root_bound_with_homotopy_data(systems::Vector{Vector{QQMPolyRingElem}}; verbose=false, print_result = true)
-
-Given a partition of a square system into subsystems, compute an upper bound on the number of solutions in the torus, 
-based on the stable intersection of the tropicalizations.
-
-"""
 function tropical_root_bound_with_homotopy_data(systems::Vector{Vector{QQMPolyRingElem}}; verbose=false, print_result = false)
     nu = tropical_semiring_map(QQ,min)
     time_trop = @elapsed tropicalizations = [tropical_variety(ideal(system),nu)[1] for system in systems]
@@ -114,3 +107,15 @@ function tropical_root_bound_with_homotopy_data(systems::Vector{Vector{QQMPolyRi
     end
     return sum(multiplicities), pertubations, intersection_points, multiplicities
 end
+
+
+
+"""
+    tropical_root_bound(systems::Vector{Vector{QQMPolyRingElem}})
+
+    Given a partition of a square system into subsystems, compute an upper bound on the number of solutions in the torus, 
+    based on the stable intersection of the tropicalizations.
+    
+"""
+tropical_root_bound(systems::Vector{Vector{QQMPolyRingElem}}) = tropical_root_bound_with_homotopy_data(systems)[1]
+
