@@ -27,14 +27,14 @@ tropical_solve(systems)
 ```
 The underlying stable intersection calculation shows that the mixed volume is 4:
 ```
-tropical_stable_intersection_with_homotopy_data(systems)[1]
+tropical_root_bound(systems)
 ```
 A sharper bound is obtained as follows:
 ```
 systems = linear_and_binomial_part(F)
-tropical_stable_intersection_with_homotopy_data(systems)[1]
+tropical_root_bound(systems)
 ```
-To use the associated generalized homotopies to solve the system, we run
+To use the associated generalized polyhedral homotopies to solve the system, we run
 ```
 tropical_solve(systems)
 ```
