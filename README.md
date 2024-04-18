@@ -22,19 +22,19 @@ F = [5*x[1]^3*x[2] - 6*x[1]*x[2]^3 + x[1]*x[2],
 ```
 We can solve it with classical polyhedral homotopies as follows:
 ```
-systems = [[f] for f in F]
-tropical_solve(systems)
+decomposition = [[f] for f in F]
+tropical_solve(decomposition)
 ```
 The underlying stable intersection calculation shows that the mixed volume is 4:
 ```
-tropical_root_bound(systems)
+tropical_root_bound(decomposition)
 ```
 A sharper bound is obtained as follows:
 ```
-systems = linear_and_binomial_part(F)
-tropical_root_bound(systems)
+decomposition = linear_and_binomial_part(F)
+tropical_root_bound(decomposition)
 ```
 To use the associated generalized polyhedral homotopies to solve the system, we run
 ```
-tropical_solve(systems)
+tropical_solve(decomposition)
 ```
