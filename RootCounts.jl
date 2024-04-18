@@ -85,6 +85,8 @@ end
 
 
 function tropical_root_bound_with_homotopy_data(systems::Vector{Vector{QQMPolyRingElem}}; verbose=false, print_result = false)
+    @req !isempty(systems) "systems must be a nonempty list"
+    @req all(isequal(parent(systems[1][1])), parent.(vcat(systems...))) "all systems must have the same parent ring"
     nu = tropical_semiring_map(QQ,min)
     time_trop = @elapsed tropicalizations = [tropical_variety(ideal(system),nu)[1] for system in systems]
     if verbose >= 2
