@@ -4,7 +4,7 @@ based on homotopies constructed from certain tropical stable intersections.
 
 It uses functionality from Oscar.jl and HomotopyContinuation.jl.
 
-The underlying ideas are to be explained in a forthcoming paper with Paul Helminck, Oskar Henriksson, Yue Ren, Benjamin Schröter.
+The underlying ideas are to be explained in a forthcoming paper with Paul Helminck, Oskar Henriksson, Yue Ren, and Benjamin Schröter.
 
 > [!WARNING]  
 > This is an early version of the code, made public for demonstration purposes. 
