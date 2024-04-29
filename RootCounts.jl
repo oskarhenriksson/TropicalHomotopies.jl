@@ -1,6 +1,6 @@
 
 """
-    modify_vertically(polynomialSystem::Vector{<:MPolyRingElem})
+    linear_and_binomial_part(polynomialSystem::Vector{<:MPolyRingElem})
 
     Carry out the vertical modification from [^HR23], where one introduces a new variable for each monomial appearing in the system. Outputs the linear system in the new variables, together with a binomial system.
 

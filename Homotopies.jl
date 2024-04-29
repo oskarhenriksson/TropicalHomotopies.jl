@@ -3,7 +3,7 @@
     tropical_homotopies_from_homotopy_data(systems,pertubations,intersection_points)
 
 Converts tropical intersection data (for instance  the auxilarly data from the Oscar function
-`tropical_vertical_root_bound_with_homotopy_data`) into HomotopyContinuation.jl homotopies.
+`tropical_root_bound_with_homotopy_data`) into HomotopyContinuation.jl homotopies.
 
 """
 function tropical_homotopies_from_homotopy_data(systems,pertubations,intersection_points; verbose=false)
@@ -49,7 +49,9 @@ function export_homotopy_from_oscar_to_HC(homotopy)
     return HC.Homotopy( [ sum([ c*prod(z.^e)*t^a for (c,e,a) in hzipped]) for hzipped in zipped_homotopy] , z, t)
 end
 
-start_system(H::HC.ModelKit.Homotopy) = HC.System(HC.subs(H.expressions,H.t=>0))
+function start_system(H::HC.ModelKit.Homotopy) 
+    return HC.System(HC.subs(H.expressions,H.t=>0))
+end
 
 function solve_binomial_system(F::HC.ModelKit.System)
     system_exponents, system_coefficients = HC.support_coefficients(F)
