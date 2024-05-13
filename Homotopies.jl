@@ -18,13 +18,12 @@ function tropical_homotopies_in_oscar_from_homotopy_data(systems,pertubations,in
     Qt, t = rational_function_field(QQ,"t") #todo: change to laurent_polynomial_ring when https://github.com/oscar-system/Oscar.jl/discussions/3156 is fixed
     Qtx, x = polynomial_ring(Qt, symbols(Qx))
     homotopies = [] #todo: add type
-    time_groebner = 0
     for w in intersection_points
         homotopy_w = []
         for (system,u) in zip(systems,pertubations)
             r = lcm(denominator.(Vector(w-u)))
             shift = Int.(Vector(r*Vector(w-u)))
-            time_groebner += @elapsed system_GB = groebner_basis_workaround(ideal(system),nu,shift)
+            system_GB = groebner_basis(ideal(system),nu,shift)
             system_shifted = evaluate.(system_GB,Ref(t.^(shift) .* x))
             valuation_shift = -Int.(evaluate.(tropical_polynomial.(system_GB),Ref(shift)))
             homotopy_w = vcat(homotopy_w, (t.^valuation_shift).*system_shifted )
@@ -56,7 +55,6 @@ end
 function solve_binomial_system(F::HC.ModelKit.System)
     system_exponents, system_coefficients = HC.support_coefficients(F)
     @req all(isequal(2),length.(system_coefficients)) "Input system must be binomial"
-    # Todo: Support for monomials?
     A = hcat( (E->E[:,1]-E[:,2]).(system_exponents)... )
     b = (c->-c[2]//c[1]).(system_coefficients)
     BSS = HC.BinomialSystemSolver(A,b)
@@ -135,7 +133,7 @@ function tropical_solve(systems::Vector{Vector{QQMPolyRingElem}}; verbose=1, det
     end
     all_solutions = approximately_unique_vectors(all_solutions)
     if verbose >= 1
-        println("Number of paths traced: ",root_count)
+        println("Number of paths traced: ", root_count)
         println("Number of solutions found: ", length(all_solutions))
         println()
     end
