@@ -5,17 +5,17 @@ using Oscar
 ###
 # Choosing parameters (and their valuations)
 ###
-v = [3,0,2,3,2,2,3,2] # first choice
-# v = [0,1,2,0,0,1,2,0] # second choice
+K,t = rational_function_field(QQ,"t")
+nu = tropical_semiring_map(K,t)
+
+# v = [3,0,2,3,2,2,3,2] # first choice
+v = [0,1,2,0,0,1,2,0] # second choice
 b = t .^v
 
 
 ###
 # Constructing the tropicalizations
 ###
-K,t = rational_function_field(QQ,"t")
-nu = tropical_semiring_map(K,t)
-
 R,(x1,x2,y1) = K["x1","x2","y1"];
 y2 = x1
 y3 = x2
@@ -51,8 +51,8 @@ println(multiplicities(TropI))
 # Computing the initial form of the intersection point
 ###
 S,(X1,X2) = K["X1","X2"]
-I = ideal(S,[b1*X1^2+b1*X2^2+b2*X1+b3*X2+b4,
-             3*b5*X1^2+3*b5*X2^2+5*b6*X1+7*b7*X2+11*b8])
+I = ideal(S,[b[1]*X1^2+b[1]*X2^2+b[2]*X1+b[3]*X2+b[4],
+             3*b[5]*X1^2+3*b[5]*X2^2+5*b[6]*X1+7*b[7]*X2+11*b[8]])
 w = first(vertices(TropI))
 display(initial.(gens(I),Ref(nu),Ref(w[1:2])))
 
@@ -62,5 +62,7 @@ display(initial.(gens(I),Ref(nu),Ref(w[1:2])))
 # Extra: computing tropical Groebner basis of the homogenized ideal
 ###
 S,(X0,X1,X2) = K["X0","X1","X2"]
-I = ideal(S,[b1*X1^2+b1*X2^2+b2*X1*X0+b3*X2*X0+b4*X0^2, 3*b5*X1^2+3*b5*X2^2+5*b6*X1*X0+7*b7*X2*X0+11*b8*X0^2])
-initial(I,nu,vcat(0,w[1:2]))
+Ih = ideal(S,[b[1]*X1^2+b[1]*X2^2+b[2]*X1*X0+b[3]*X2*X0+b[4]*X0^2,
+             3*b[5]*X1^2+3*b[5]*X2^2+5*b[6]*X1*X0+7*b[7]*X2*X0+11*b[8]*X0^2])
+Gh = groebner_basis(I,nu,vcat(0,w[1:2]))
+G = evaluate.(Gh,Ref([1,X1,X2]))
