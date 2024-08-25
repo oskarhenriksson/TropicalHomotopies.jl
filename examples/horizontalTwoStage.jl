@@ -39,6 +39,8 @@ TropH3 = tropical_hypersurface(h,nu)
 @assert n_maximal_polyhedra.([TropH1,TropH2,TropH3])==[5,5,6] "Newton subdivisions not maximal"
 
 intersectionDimensions = [dim(reduce(intersect,[sigma,tau,rho])) for sigma in maximal_polyhedra(TropH1), tau in maximal_polyhedra(TropH2), rho in maximal_polyhedra(TropH3)]
+@assert isempty(findall(d->(d>0),intersectionDimensions)) "positive dimensional intersection"
+@assert length(findall(d->(d>=0),intersectionDimensions))==1 "intersection potentially non-transversal"
 
 
 ###
