@@ -17,7 +17,7 @@ The repository consists of three main parts:
 * The `case_studies` contains code for the examples from chemical reaction network theory and graph rigidity theory discussed at the end of the paper, that uses functionality from `src`.
 
 ## Installation
-The easiest way to get started using the contents of this is to manually download all files, and then run
+The easiest way to get started using the code in `src` is to manually download all files, and then run
 
 ```julia
 include("PATH/TO/src/main.jl")
