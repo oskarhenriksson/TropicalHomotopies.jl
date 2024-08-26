@@ -19,7 +19,7 @@ The repository consists of three main parts:
 ## Installation
 The easiest way to get started using the contents of this is to manually download all files, and then run
 
-```
+julia```
 include("PATH/TO/src/main.jl")
 ```
 where `PATH/TO/src/main.jl` is replaced by the actual path to the file `src/main.jl`.
