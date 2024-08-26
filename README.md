@@ -14,6 +14,6 @@ The underlying ideas are to be explained in a forthcoming paper with Paul Helmin
 The easiest way to get started using the contents of this is to manually download all files, and then run
 
 ```
-include(main.jl)
+include("PATH/TO/main.jl")
 ```
-where `main.jl` is replaced by the path to the file `main.jl`.
+where `PATH/TO/main.jl` is replaced by the actual path to the file `main.jl`.
