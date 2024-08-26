@@ -31,9 +31,12 @@ function tropical_solve(F::Vector{<:PolyRingElem},target_parameters::Vector{QQFi
 
     if type_of_system == :vertical
         grc, projected_pts, initial_systems, tropical_groebner_bases, perturbed_parameters = 
-            tropical_root_count_with_homotopy_data_vertical(F, perturbed_parameters=perturbed_parameters)
-        
-        S_HC = HC_system_from_Oscar_system(S)
+               tropical_root_count_with_homotopy_data_vertical(F, perturbed_parameters=perturbed_parameters)
+        for S in initial_systems
+            time_start_systems += @elapsed S_HC = HC_system_from_Oscar_system(S)
+            start_solutions = solve_binomial_system(S_HC)
+            push!(start_solutions_for_homotopies,start_solutions)
+        end
         time_start_systems += @elapsed start_solutions = solve_binomial_system(S_HC)
         push!(start_solutions_for_homotopies,start_solutions)
     else
@@ -81,7 +84,7 @@ using the `BinomialSystemSolver` from the `HomotopyContinuation.jl` package.
 """
 function solve_binomial_system(F::HC.ModelKit.System)
     system_exponents, system_coefficients = HC.support_coefficients(F)
-    @req all(isequal(2),length.(system_coefficients)) "Input system must be binomial"
+    @assert all(isequal(2),length.(system_coefficients)) "Input system must be binomial"
     A = hcat( (E->E[:,1]-E[:,2]).(system_exponents)... )
     b = (c->-c[2]//c[1]).(system_coefficients)
     BSS = HC.BinomialSystemSolver(A,b)

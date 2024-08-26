@@ -1,4 +1,4 @@
-include("../main.jl")
+include("./main.jl")
 
 # Set up the parmetric WNT pathway system
 
@@ -17,18 +17,27 @@ F, target_parameters = vertical_embedding(target_system)
 # Redraw the perturbed parameters until we get a transverse intersection
 m = length(target_parameters)
 Kt, t = rational_function_field(QQ, "t")
-for attempts = 1:5
-    v = rand(-100:100, m)
-    perturbed_parameters = (t.^v) .* target_parameters
-    try 
-        grc, projected_pts, initial_systems, tropical_groebner_bases, perturbed_parameters = 
-            tropical_root_count_with_homotopy_data_vertical(F, perturbed_parameters=perturbed_parameters);
-        break
-    catch e
-        println(e)
-        continue
-    end
-end
+
+v = rand(-100:100, m)
+perturbed_parameters = (t.^v) .* target_parameters
+grc, projected_pts, initial_systems, tropical_groebner_bases, perturbed_parameters = 
+            tropical_root_count_with_homotopy_data_vertical(F, perturbed_parameters=perturbed_parameters, verbose=true);
+            
+
+# for attempts = 1:5
+#     v = rand(-100:100, m)
+#     perturbed_parameters = (t.^v) .* target_parameters
+#     try 
+#         grc, projected_pts, initial_systems, tropical_groebner_bases, perturbed_parameters = 
+#             tropical_root_count_with_homotopy_data_vertical(F, perturbed_parameters=perturbed_parameters, verbose=true);
+#         break
+#     catch e
+#         println(e)
+#         continue
+#     end
+# end
+
+
 
 # Computation of homotopies 
 homotopies = [  homotopy_from_tropical_data(G,w) 
