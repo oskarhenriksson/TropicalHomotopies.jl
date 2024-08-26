@@ -1,4 +1,4 @@
-include("./main.jl")
+include("../main.jl")
 
 # Set up the parmetric WNT pathway system
 

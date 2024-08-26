@@ -1,6 +1,3 @@
-import Pkg
-Pkg.activate(".")
-
 using Oscar
 
 include("helper_functions.jl")
