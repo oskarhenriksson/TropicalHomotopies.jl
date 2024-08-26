@@ -4,7 +4,7 @@ based on homotopies constructed from certain tropical stable intersections.
 
 It uses functionality from [OSCAR](https://github.com/oscar-system/Oscar.jl) and [HomotopyContinuation.j](https://github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl).
 
-The underlying ideas are to be explained in a forthcoming paper with Paul Helminck, Oskar Henriksson, and Yue Ren.
+The underlying ideas are to be explained in a forthcoming paper titled _A tropical method for solving parametrized polynomial systems_ by Paul Helminck, Oskar Henriksson, and Yue Ren.
 
 > [!WARNING]  
 > This is an early version of the code, made public for demonstration purposes. 
