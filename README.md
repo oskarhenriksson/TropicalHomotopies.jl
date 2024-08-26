@@ -2,7 +2,7 @@
 This project implements a general framework for computing solving polynomial systems numerically, 
 based on homotopies constructed from certain tropical stable intersections.
 
-It uses functionality from Oscar.jl and HomotopyContinuation.jl.
+It uses functionality from [OSCAR](https://github.com/oscar-system/Oscar.jl) and [HomotopyContinuation.j](https://github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl).
 
 The underlying ideas are to be explained in a forthcoming paper with Paul Helminck, Oskar Henriksson, and Yue Ren.
 
