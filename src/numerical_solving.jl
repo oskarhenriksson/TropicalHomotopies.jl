@@ -19,26 +19,42 @@ function tropical_solve(F::Vector{<:MPolyRingElem},target_parameters::Vector{QQF
 
     # Perturb parameters
     m = length(target_parameters)
-    v = rand(-100:100, m)
     Kt, t = rational_function_field(QQ, "t")
-    perturbed_parameters = (t.^v) .* target_parameters
 
     # Compute tropical data and start solutions
     # This part of the code is specific to each type of system
-    
-    time_start_systems = 0
-    start_solutions_for_homotopies = []
-
-    if type_of_system == :vertical
-        grc, projected_pts, initial_systems, tropical_groebner_bases, perturbed_parameters = 
-               tropical_root_count_with_homotopy_data_vertical(F, perturbed_parameters=perturbed_parameters)
-        for S in initial_systems
-            time_start_systems += @elapsed S_HC = HC_system_from_Oscar_system(S)
-            start_solutions = solve_binomial_system(S_HC)
-            push!(start_solutions_for_homotopies,start_solutions)
+    # Repick pertubation until the data is computed successfully
+    v = nothing
+    perturbed_parameters = nothing
+    grc = nothing
+    projected_pts = nothing
+    initial_systems = nothing
+    tropical_groebner_bases = nothing
+    perturbed_parameters = nothing
+    start_solutions_for_homotopies = nothing
+    for attempts = 1:10
+        v = rand(-100:100, m)
+        perturbed_parameters = (t.^v) .* target_parameters
+        
+        try 
+            if type_of_system == :vertical
+                grc, projected_pts, initial_systems, tropical_groebner_bases, perturbed_parameters = 
+                       tropical_root_count_with_homotopy_data_vertical(F, perturbed_parameters=perturbed_parameters)
+                time_start_systems = 0
+                start_solutions_for_homotopies = []
+                for S in initial_systems
+                    time_start_systems += @elapsed S_HC = HC_system_from_Oscar_system(S)
+                    start_solutions = solve_binomial_system(S_HC)
+                    push!(start_solutions_for_homotopies,start_solutions)
+                end
+            else
+                error("Tropical data not implemented for $type_of_system")
+            end
+            break
+        catch e
+            println(e)
+            continue
         end
-    else
-        error("Tropical data not implemented for $type_of_system")
     end
 
     # Compute homotopies from the tropical data
@@ -48,7 +64,6 @@ function tropical_solve(F::Vector{<:MPolyRingElem},target_parameters::Vector{QQF
     all_solutions = Vector{ComplexF64}[]
     time_tracing = 0
     for (H,start_solutions) in zip(homotopies,start_solutions_for_homotopies)
-
         # Ensure square homotopy
         if length(H) > ngens(parent(first(H)))
             A = rand(-100:100,ngens(parent(first(H))),length(H))
@@ -56,21 +71,22 @@ function tropical_solve(F::Vector{<:MPolyRingElem},target_parameters::Vector{QQF
         elseif length(H) < ngens(parent(first(H)))
             error("Underdetermined homotopy detected")
         end
-        
         # Export to HC format
         H_HC = export_homotopy_from_oscar_to_HC(H)
-        t = H_HC.t
-        x = H_HC.variables
-
-        # Trace solutions along homotopy via a random complex number
-        t1 = exp(2*pi*im*rand())
-        time_tracing += @elapsed res1 = HC.track.(HC.Tracker(H_HC),start_solutions,0,t1)
-        sol1 = [HC.solution(r) for r in res1 if r.return_code == :success]
-        time_tracing += @elapsed res = HC.track.(HC.Tracker(H_HC),sol1,t1,1)
-        new_solutions = [HC.solution(r) for r in res if r.return_code == :success]
+        # Trace the solutions along the homotopy
+        time_tracing += @elapsed new_solutions = trace_solutions_along_homotopy(H_HC,start_solutions)
         append!(all_solutions,new_solutions)
     end
     return all_solutions
+end
+
+function trace_solutions_along_homotopy(H_HC::HC.ModelKit.Homotopy,start_solutions)
+    t1 = exp(2*pi*im*rand())
+    res1 = HC.track.(HC.Tracker(H_HC),start_solutions,0,t1)
+    sol1 = [HC.solution(r) for r in res1 if r.return_code == :success]
+    res = HC.track.(HC.Tracker(H_HC),sol1,t1,1)
+    new_solutions = [HC.solution(r) for r in res if r.return_code == :success]
+    return new_solutions
 end
 
 
