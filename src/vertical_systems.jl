@@ -134,9 +134,13 @@ function tropical_root_count_with_homotopy_data_vertical(F; perturbed_parameters
     # Project points to the original variable space
     projected_pts = [w[1:ngens(Kx)] for w in pts] 
 
-    # Substitution homomorphisms
+    # Substitution homomorphism Kxy -> Kx with y -> target_parametrs.*monomial_vector
     Kxy, xy = polynomial_ring(K,symbols(Kaxy))
-    substitute_y_by_monomials = hom(Kxy,Kx,vcat(gens(Kx),monomial_vector)) 
+    target_parameters = (c->evaluate(c,QQ(1))).(perturbed_parameters)
+    target_monomial_vector = target_parameters .* monomial_vector
+    substitute_y_by_monomials = hom(Kxy,Kx,vcat(gens(Kx),target_monomial_vector)) 
+
+    # Substitution homomorphism Kxy -> Ktx with y -> perturbed_parameters.*monomial_vector
     perturbed_monomial_vector = perturbed_parameters .* hom(Kx,Ktx,gens(Ktx)).(monomial_vector)
     substitute_y_by_perturbed_monomials = hom(Kxy,Ktx,vcat(gens(Ktx),perturbed_monomial_vector)) 
 
@@ -144,15 +148,18 @@ function tropical_root_count_with_homotopy_data_vertical(F; perturbed_parameters
     tropical_groebner_bases = Vector{MPolyRingElem}[]
     initial_systems = Vector{QQMPolyRingElem}[]
     for w in pts
-        # Compute the tropical Gröbner basis and initial for the lienar part
+        # Compute the tropical Gröbner basis and initial for the linear part
         G_linear = groebner_basis(ideal(linear_part_specialized),nu_K,w)
         initials_linear = initial.(G_linear, Ref(nu_K), Ref(w))
         
         # Substitute the y variables by the monomials
-        G = substitute_y_by_perturbed_monomials.(G_linear)
         initials = substitute_y_by_monomials.(initials_linear)
-        @req initial.(G,Ref(nu),Ref(w[1:ngens(Kx)])) == initials "Initials are not correct"
         @req all(isequal(2),length.(initials)) "Non-binomial initial detected"
+
+        # Alternative computation of the initials
+        G = substitute_y_by_perturbed_monomials.(G_linear)
+        initials_alternative = initial.(G,Ref(nu),Ref(w[1:ngens(Kx)]))
+        @req initials_alternative == initials "Initials are not correct: $(initial.(G,Ref(nu),Ref(w[1:ngens(Kx)]))) != $initials"
         
         push!(tropical_groebner_bases,G)
         push!(initial_systems,initials)
