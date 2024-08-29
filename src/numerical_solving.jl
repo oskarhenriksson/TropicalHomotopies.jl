@@ -15,7 +15,7 @@ The `target_parameters` should be generic and rational.
 
 
 """
-function tropical_solve(F::Vector{<:PolyRingElem},target_parameters::Vector{QQFieldElem},type_of_system::Symbol; kwargs...)
+function tropical_solve(F::Vector{<:MPolyRingElem},target_parameters::Vector{QQFieldElem};type_of_system::Symbol, kwargs...)
 
     # Perturb parameters
     m = length(target_parameters)
@@ -37,8 +37,6 @@ function tropical_solve(F::Vector{<:PolyRingElem},target_parameters::Vector{QQFi
             start_solutions = solve_binomial_system(S_HC)
             push!(start_solutions_for_homotopies,start_solutions)
         end
-        time_start_systems += @elapsed start_solutions = solve_binomial_system(S_HC)
-        push!(start_solutions_for_homotopies,start_solutions)
     else
         error("Tropical data not implemented for $type_of_system")
     end
@@ -65,10 +63,12 @@ function tropical_solve(F::Vector{<:PolyRingElem},target_parameters::Vector{QQFi
         x = H_HC.variables
 
         # Reverse homotopy
-        H_HC_reversed = HC.Homotopy(subs(H_HC.expressions,t=>(1-t)),x,t) #todo: improve this
+        H_HC_reversed = HC.Homotopy(HC.subs(H_HC.expressions,t=>(1-t)),x,t) #todo: improve this
         
         # Trace solutions along homotopy
-        time_tracing += @elapsed new_solutions = HC.solutions(HC.solve(H_HC_reversed,start_solutions))
+        time_tracing += @elapsed result = HC.solve(H_HC_reversed,start_solutions)
+        display(result)
+        new_solutions = HC.solutions(result)
         append!(all_solutions,new_solutions)
     end
     return all_solutions
