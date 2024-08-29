@@ -15,7 +15,7 @@ The `target_parameters` should be generic and rational.
 
 
 """
-function tropical_solve(F::Vector{<:MPolyRingElem},target_parameters::Vector{QQFieldElem};type_of_system::Symbol, kwargs...)
+function tropical_solve(F::Vector{<:MPolyRingElem},target_parameters::Vector{QQFieldElem};type_of_system::Symbol, verbose::Bool=false, kwargs...)
 
     # Perturb parameters
     m = length(target_parameters)
@@ -39,7 +39,7 @@ function tropical_solve(F::Vector{<:MPolyRingElem},target_parameters::Vector{QQF
         try 
             if type_of_system == :vertical
                 grc, projected_pts, initial_systems, tropical_groebner_bases, perturbed_parameters = 
-                       tropical_root_count_with_homotopy_data_vertical(F, perturbed_parameters=perturbed_parameters)
+                       tropical_root_count_with_homotopy_data_vertical(F, perturbed_parameters=perturbed_parameters, verbose=verbose)
                 time_start_systems = 0
                 start_solutions_for_homotopies = []
                 for S in initial_systems
@@ -47,6 +47,9 @@ function tropical_solve(F::Vector{<:MPolyRingElem},target_parameters::Vector{QQF
                     start_solutions = solve_binomial_system(S_HC)
                     push!(start_solutions_for_homotopies,start_solutions)
                 end
+                if verbose 
+                    println("Time spent computing start solutions: ", time_start_systems)
+                end 
             else
                 error("Tropical data not implemented for $type_of_system")
             end
@@ -76,6 +79,9 @@ function tropical_solve(F::Vector{<:MPolyRingElem},target_parameters::Vector{QQF
         # Trace the solutions along the homotopy
         time_tracing += @elapsed new_solutions = trace_solutions_along_homotopy(H_HC,start_solutions)
         append!(all_solutions,new_solutions)
+    end
+    if verbose
+        println("Time spent tracing solutions: ", time_tracing)
     end
     return all_solutions
 end
