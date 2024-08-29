@@ -3,12 +3,13 @@ include("../src/main.jl")
 # Set up the parmetric WNT pathway system
 
 include("construct_wnt_system.jl")
-system = polynomialSystemSimplified
+#system = polynomialSystemSimplified
+system = polynomialSystemParametrised
 number_of_parameters = ngens(coefficient_ring(parent(first(system))))
 
 # Make a choice of parameters
 target_parameters = collect(1:number_of_parameters)
-target_system = specialize(polynomialSystemSimplified, target_parameters)
+target_system = specialize(system, target_parameters)
 
 # Embedding in vertical family
 F, target_parameters = vertical_embedding(target_system)
@@ -36,6 +37,6 @@ println(S)
 
 
 for i=1:5
-        sols = tropical_solve(F, target_parameters; type_of_system=:vertical)
+        sols = tropical_solve(F, target_parameters; type_of_system=:vertical, verbose=true)
         println(length(sols))
 end
