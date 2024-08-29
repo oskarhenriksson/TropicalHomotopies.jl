@@ -62,13 +62,12 @@ function tropical_solve(F::Vector{<:MPolyRingElem},target_parameters::Vector{QQF
         t = H_HC.t
         x = H_HC.variables
 
-        # Reverse homotopy
-        H_HC_reversed = HC.Homotopy(HC.subs(H_HC.expressions,t=>(1-t)),x,t) #todo: improve this
-        
-        # Trace solutions along homotopy
-        time_tracing += @elapsed result = HC.solve(H_HC_reversed,start_solutions)
-        display(result)
-        new_solutions = HC.solutions(result)
+        # Trace solutions along homotopy via a random complex number
+        t1 = exp(2*pi*im*rand())
+        time_tracing += @elapsed res1 = HC.track.(HC.Tracker(H_HC),start_solutions,0,t1)
+        sol1 = [HC.solution(r) for r in res1 if r.return_code == :success]
+        time_tracing += @elapsed res = HC.track.(HC.Tracker(H_HC),sol1,t1,1)
+        new_solutions = [HC.solution(r) for r in res if r.return_code == :success]
         append!(all_solutions,new_solutions)
     end
     return all_solutions
