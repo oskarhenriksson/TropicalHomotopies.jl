@@ -8,16 +8,16 @@ and a linear space (encoded as a tropicalization of a binomial variety).
 The output is a vector of stable intersection points and a vector with the multiplicities of the points.
 
 """
-function tropical_stable_intersection_linear_binomial(TropL::TropicalLinearSpace,TropB::TropicalVariety)
+function tropical_stable_intersection_linear_binomial(TropL::TropicalLinearSpace, TropB::TropicalVariety)
 
     bergmanRays, bergmanLineality = rays_modulo_lineality(TropL)
     bergmanRays = matrix(QQ, bergmanRays)
     bergmanLineality = matrix(QQ, bergmanLineality)
 
     minimalFaces, linearSpaceBasis = minimal_faces(TropB)
-    linearSpaceBasis = matrix(QQ,linearSpaceBasis)
+    linearSpaceBasis = matrix(QQ, linearSpaceBasis)
 
-    @req length(minimalFaces)==1 "Several minimal faces found in TropL"
+    @req length(minimalFaces) == 1 "Several minimal faces found in TropL"
     pertubation = Vector(minimalFaces[1])
 
     # compute the projection matrix onto the orthogonal complement of the euclidean linear space
@@ -35,7 +35,7 @@ function tropical_stable_intersection_linear_binomial(TropL::TropicalLinearSpace
     projectedPertubation = matrix(QQ, [pertubation]) * projectionMatrix
     stableIntersectionPoints = Vector{QQFieldElem}[]
     stableIntersectionMults = Int[]
-    
+
     indicesOfCones = ray_indices(maximal_polyhedra(TropL))
     nRaysPerCone = sum(indicesOfCones[1, :])
     for i in 1:nrows(indicesOfCones)
@@ -59,7 +59,7 @@ function tropical_stable_intersection_linear_binomial(TropL::TropicalLinearSpace
                 # compute intersection point and intersection multiplicity
                 intersectionPoint = solution * vcat(bergmanRays[indicesOfCone, :], bergmanLineality)
 
-                push!(stableIntersectionPoints, intersectionPoint[1,:])
+                push!(stableIntersectionPoints, intersectionPoint[1, :])
                 coneSpanBasis = vcat(bergmanRays[indicesOfCone, :], bergmanLineality)
                 push!(stableIntersectionMults, tropical_intersection_multiplicity(coneSpanBasis, linearSpaceBasis))
             end
