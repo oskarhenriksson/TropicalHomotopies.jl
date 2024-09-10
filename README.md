@@ -24,5 +24,6 @@ include("PATH/TO/src/main.jl")
 ```
 where `PATH/TO/src/main.jl` is replaced by the actual path to the file `src/main.jl`.
 
-> [!WARNING]  
-> Parts of the code require the latest development version of OSCAR (09/09/2024). 
+> [!Note]  
+> Parts of the code require the latest development version of OSCAR (09/09/2024) and version 2.11.0 of `HomotopyContinuation.jl`. 
+
