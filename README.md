@@ -23,3 +23,6 @@ The easiest way to get started using the code in `src` is to manually download a
 include("PATH/TO/src/main.jl")
 ```
 where `PATH/TO/src/main.jl` is replaced by the actual path to the file `src/main.jl`.
+
+> [!WARNING]  
+> Parts of the code require the latest development version of OSCAR (09/09/2024). 
