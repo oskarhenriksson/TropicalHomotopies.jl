@@ -4,10 +4,6 @@ based on homotopies constructed from certain tropical stable intersections. It u
 
 The underlying ideas are to be explained in a forthcoming manuscript titled _A tropical method for solving parametrized polynomial systems_ by Paul Helminck, Oskar Henriksson, and Yue Ren.
 
-> [!WARNING]  
-> This is an early version of the code, made public for demonstration purposes. 
-> Feel free to use it (at own risk). Comments and bug reports are welcome. 
-
 ## Structure of the repository
 The repository consists of three main parts:
 * The `examples` directory contains explicit computations used for the examples given throughout the paper.
