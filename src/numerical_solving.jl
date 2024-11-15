@@ -124,7 +124,7 @@ end
 Convert a homotopy from OSCAR (in the form of a system over the rational function field Q(t))
 to a`Homotopy` object in the `HomotopyContinuation.jl` package.
 
-The variables in the output will always be named `z`, and the time variable will always be named `t`.
+The variables in the output will always be named `x`, and the time variable will always be named `t`.
 
 """
 function export_homotopy_from_oscar_to_HC(homotopy)
@@ -137,8 +137,8 @@ function export_homotopy_from_oscar_to_HC(homotopy)
         push!(zipped_homotopy, hzipped)
     end
     n = ngens(parent(first(homotopy)))
-    HC.@var t z[1:n]
-    return HC.Homotopy([sum([c * prod(z .^ e) * t^a for (c, e, a) in hzipped]) for hzipped in zipped_homotopy], z, t)
+    HC.@var t x[1:n]
+    return HC.Homotopy([sum([c * prod(x .^ e) * t^a for (c, e, a) in hzipped]) for hzipped in zipped_homotopy], x, t)
 end
 
 
@@ -174,4 +174,22 @@ function parametric_HC_system_from_parametric_Oscar_system(polynomial_system)
     zipped_system = [zip(zip_coefficients.(coefficients(f)), exponents(f)) for f in polynomial_system]
     unzip_coefficient = czipped -> sum([d * prod(a .^ e) for (d, e) in czipped])
     return HC.System([sum([unzip_coefficient(c) * prod(x .^ e) for (c, e) in fzipped]) for fzipped in zipped_system], parameters=a, variables=x)
+end
+
+function parametric_Oscar_system_from_parametric_HC_system(F::HC.ModelKit.System)
+    params = HC.parameters(F)
+    A, a = polynomial_ring(QQ, string.(params))
+    vars = HC.variables(F)
+    R, x = polynomial_ring(A, string.(vars))
+    polynomials = HC.expressions(F)
+    polynomials_oscar = MPolyRingElem[]
+    for f in polynomials
+        exps, coeffs = HC.exponents_coefficients(f, vars)
+        zip_coeff = c -> zip(eachcol(HC.exponents_coefficients(c, params)[1]),HC.exponents_coefficients(c, params)[2])
+        fzipped = zip(eachcol(exps),zip_coeff.(coeffs))
+        unzip_coeff = czipped -> sum([d * prod(a .^ e) for (e,d) in czipped])
+        f_oscar = sum([unzip_coeff(c) * prod(x .^ e) for (e, c) in fzipped])
+        push!(polynomials_oscar, f_oscar)
+    end
+    return polynomials_oscar
 end
