@@ -6,7 +6,7 @@ of the `HomotopyContinuation.jl` package. This is done by computing a mixed subd
 chosen lifting. We obtain one polyhedral homotopy and one start system for each mixed cell.
 
 """
-function polyhedral_homotopies_and_start_systems(F::HomotopyContinuation.ModelKit.System)
+function polyhedral_homotopies_and_start_systems(F::HC.ModelKit.System)
     HC.@var t
     vars = HC.variables(F)
     n = length(vars)
