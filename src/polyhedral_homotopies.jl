@@ -33,18 +33,18 @@ function polyhedral_homotopies_and_start_systems(F::HC.ModelKit.System)
     end
 
     # For each mixed cell, compute the polyhedral homotopies and start systems
-    homotopies = []
-    start_systems = []
+    homotopies = HC.ModelKit.Homotopy[]
+    start_systems = HC.ModelKit.System[]
     for cell in mc
 
         # Tropical intersection point
-        w = Rational.(cell.normal)
-
+        w = rationalize.(cell.normal, tol=1e-6)
+        
         # Clear denominators
         N = lcm(map(x -> x.den, w))
         w = Int.(N * w)
         F_perturbed_reparametrized = HC.subs.(F_perturbed, Ref(t => t^N))
-        normalizations = Int.(-N * cell.β)
+        normalizations = Int.(-N * rationalize.(cell.β, tol=1e-6))
 
         # Compute polyhedral homotopy
         Hw = [t^(normalizations[j]) * HC.subs(F_perturbed_reparametrized[j], F.variables => (t .^ (w)) .* (F.variables)) for j = 1:length(F_perturbed)]
