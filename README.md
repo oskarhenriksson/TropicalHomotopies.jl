@@ -1,5 +1,5 @@
 # TropicalHomotopies.jl
-This project is a proof of concept a general framework for solving polynomial systems numerically, based on homotopies constructed using tropical geometry developed in the manuscript [A tropical method for solving parametrized polynomial systems](https://arxiv.org/abs/2409.13288) by Paul Helminck, Oskar Henriksson, and Yue Ren. The code uses functionality from [OSCAR](https://github.com/oscar-system/Oscar.jl) and [HomotopyContinuation.j](https://github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl).
+This project is a proof of concept for a general framework for solving polynomial systems numerically, based on homotopies constructed using tropical geometry developed in the paper [A tropical method for solving parametrized polynomial systems](https://arxiv.org/abs/2409.13288) by Paul Helminck, Oskar Henriksson, and Yue Ren. The code uses functionality from [OSCAR](https://github.com/oscar-system/Oscar.jl) and [HomotopyContinuation.j](https://github.com/JuliaHomotopyContinuation/HomotopyContinuation.jl).
 
 ## Structure of the repository
 The repository consists of three main parts:
