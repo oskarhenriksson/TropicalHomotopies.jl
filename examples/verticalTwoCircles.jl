@@ -23,7 +23,7 @@ y5 = 1
 
 Ilin = ideal(R,[a[1]*y1+a[2]*y2+a[3]*y3+a[4]*y4+a[5]*y5,
                 3*a[1]*y1+3*a[2]*y2+5*a[3]*y3+7*a[4]*y4+11*a[5]*y5])
-TropL = tropical_variety(Ilin,nu)
+TropL = Oscar.tropical_variety_linear(Ilin,nu)
 
 g1 = y1-x1^2
 TropH1 = tropical_hypersurface(g1,nu)
