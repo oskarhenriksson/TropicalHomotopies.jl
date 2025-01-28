@@ -61,10 +61,9 @@ display(initial.(gens(I),Ref(nu),Ref(w[1:2])))
 
 
 ###
-# Extra: computing tropical Groebner basis of the homogenized ideal
+# Extra: computing homotopies using the tropical Groebner basis as per Lemma 4.4
 ###
-S,(X0,X1,X2) = K["X0","X1","X2"]
-Ih = ideal(S,[a[1]*X1^2+a[2]*X2^2+a[3]*X1*X0+a[4]*X2*X0+a[5]*X0^2,
-              3*a[1]*X1^2+3*a[2]*X2^2+5*a[3]*X1*X0+7*a[4]*X2*X0+11*a[5]*X0^2])
-Gh = groebner_basis(Ih,nu,vcat(0,w[1:2]))
-G = evaluate.(Gh,Ref([1,X1,X2]))
+Ghat = groebner_basis(Ilin,ordering=invlex(R)) # Groebner basis of linear ideal
+Rhat = base_ring(Ilin)
+phi = hom(Rhat,R,[x1,x2,x1^2,x2^2])
+phi.(Ghat)
