@@ -1,0 +1,7 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+Oscar = "f1435218-dba5-11e9-1e4d-f1a5fab5fc13"
+TropicalHomotopies = "e267ce07-4970-4827-8a26-b5f290050621"
+
+[sources]
+TropicalHomotopies = {path = ".."}
