@@ -17,7 +17,7 @@ The `target_parameters` should be generic and rational.
 (One can use a parameter homotopy to trace the solutions to a specific choice of parameters later.) 
 
 !!! note
-    As of now, `type_of_system`` has to be `:vertical`. Implementing `:horizontal`` is work in progress.
+    As of now, `type_of_system` has to be `:vertical`. Implementing `:horizontal` is work in progress.
 
 
 """
