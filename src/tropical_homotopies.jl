@@ -1,3 +1,4 @@
+export homotopy_from_tropical_data
 
 @doc raw"""
     homotopy_from_tropical_data(G,w)

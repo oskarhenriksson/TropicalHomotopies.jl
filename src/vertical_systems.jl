@@ -1,4 +1,4 @@
-
+export vertical_embedding, tropical_root_count_with_homotopy_data_vertical, modify_vertically
 
 @doc raw"""
     vertical_embedding(F::Vector{<:MPolyRingElem})

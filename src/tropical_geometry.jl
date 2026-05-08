@@ -1,3 +1,4 @@
+export tropical_stable_intersection_linear_binomial
 
 @doc raw""""
     tropical_stable_intersection_linear_binomial(TropL::TropicalLinearSpace,TropB::TropicalVariety)

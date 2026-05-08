@@ -1,3 +1,5 @@
+export polyhedral_homotopies_and_start_systems
+
 @doc raw"""
     polyhedral_homotopies_and_start_systems(F::HomotopyContinuation.ModelKit.System)
 

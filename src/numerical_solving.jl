@@ -1,4 +1,10 @@
-import HomotopyContinuation as HC
+export tropical_solve, 
+trace_solutions_along_homotopy, 
+solve_binomial_system, 
+export_homotopy_from_oscar_to_HC, 
+HC_system_from_Oscar_system,
+parametric_HC_system_from_parametric_Oscar_system,
+parametric_Oscar_system_from_parametric_HC_system
 
 @doc raw"""
     tropical_solve(F::Vector{<:PolyRingElem},target_parameters::Vector{QQFieldElem},type_of_system::Symbol;kwargs...)

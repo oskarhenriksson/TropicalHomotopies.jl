@@ -2,7 +2,7 @@
 
 julia_version = "1.12.2"
 manifest_format = "2.0"
-project_hash = "b67531716f7f06dc41bee9e58a961bc986929163"
+project_hash = "28a3b1e27a0b648dd3ee883e4fda2b13f7aa0c39"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "bbc22a9a08a0ef6460041086d8a7b27940ed4ffd"
@@ -649,10 +649,10 @@ uuid = "3e5b6fbb-0976-4d2c-9146-d79de83f2fb0"
 version = "0.1.18"
 
 [[deps.Hwloc_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl"]
-git-tree-sha1 = "92f65c4d78ce8cdbb6b68daf88889950b0a99d11"
+deps = ["Artifacts", "JLLWrappers", "Libdl", "XML2_jll", "Xorg_libpciaccess_jll"]
+git-tree-sha1 = "baaaebd42ed9ee1bd9173cfd56910e55a8622ee1"
 uuid = "e33a78d0-f292-5ffc-b300-72abe9b543c8"
-version = "2.12.1+0"
+version = "2.13.0+1"
 
 [[deps.HypergeometricFunctions]]
 deps = ["LinearAlgebra", "OpenLibm_jll", "SpecialFunctions"]
@@ -1586,6 +1586,12 @@ git-tree-sha1 = "8d0d7a3fe2f30d6a7f833a5f19f7c7a5b396eae6"
 uuid = "a2a6695c-b41b-5b7d-aed9-dbfdeacea5d7"
 version = "0.3.0"
 
+[[deps.TropicalHomotopies]]
+deps = ["HomotopyContinuation", "Oscar"]
+path = "."
+uuid = "e267ce07-4970-4827-8a26-b5f290050621"
+version = "0.1.0"
+
 [[deps.UUIDs]]
 deps = ["Random", "SHA"]
 uuid = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
@@ -1608,9 +1614,15 @@ version = "0.21.72"
 
 [[deps.XML2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libiconv_jll", "Zlib_jll"]
-git-tree-sha1 = "5c959b708667b34cb758e8d7c6f8e69b94c32deb"
+git-tree-sha1 = "80d3930c6347cfce7ccf96bd3bafdf079d9c0390"
 uuid = "02c8fc9c-b97f-50b9-bbe4-9be30ff0a78a"
-version = "2.15.1+0"
+version = "2.13.9+0"
+
+[[deps.Xorg_libpciaccess_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Zlib_jll"]
+git-tree-sha1 = "58972370b81423fc546c56a60ed1a009450177c3"
+uuid = "a65dc6b1-eb27-53a1-bb3e-dea574b5389e"
+version = "0.19.0+0"
 
 [[deps.ZeroMQ_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "libsodium_jll"]

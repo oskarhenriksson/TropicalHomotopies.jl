@@ -1,3 +1,11 @@
+export coefficient_matrix_and_monomials, specialize
+
+@doc raw"""
+
+    coefficient_matrix_and_monomials(F::Vector{<:MPolyRingElem})
+
+Extract a coefficient matrix and a vector of monomials for a system `F`.
+"""
 function coefficient_matrix_and_monomials(F::Vector{<:MPolyRingElem})
     Kx = parent(first(F))
     distinct_monomials = unique(vcat(collect.(monomials.(F))...))
@@ -5,6 +13,12 @@ function coefficient_matrix_and_monomials(F::Vector{<:MPolyRingElem})
     return coefficient_matrix, distinct_monomials
 end
 
+
+@doc raw"""
+    specialize(F::Vector{<:MPolyRingElem}, choice_of_parameters::Vector{<:Union{Int, RingElem}})
+
+Specialize a parametric polynomial system `F` at a `choice_of_parameters`
+"""
 function specialize(F::Vector{<:MPolyRingElem}, choice_of_parameters::Vector{<:Union{Int, RingElem}})
     Kax = parent(first(F))
     Ka = coefficient_ring(Kax)
