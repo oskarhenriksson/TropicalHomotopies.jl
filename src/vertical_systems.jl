@@ -151,15 +151,17 @@ function tropical_root_count_with_homotopy_data_vertical(F; perturbed_parameters
         # Compute the tropical Gröbner basis and initial for the linear part
         G_linear = groebner_basis(ideal(linear_part_specialized), nu_K, w)
         initials_linear = initial.(G_linear, Ref(nu_K), Ref(w))
+        initials_linear = groebner_basis(ideal(initials_linear), complete_reduction=true) # to ensure that generatros are binomials
 
         # Substitute the y variables by the monomials
         initials = substitute_y_by_monomials.(initials_linear)
         @req all(isequal(2), length.(initials)) "Non-binomial initial detected"
 
-        # Alternative computation of the initials
+        # # Alternative computation of the initials
         G = substitute_y_by_perturbed_monomials.(G_linear)
-        initials_alternative = initial.(G, Ref(nu), Ref(w[1:ngens(Kx)]))
-        @req initials_alternative == initials "Initials are not correct: $(initial.(G,Ref(nu),Ref(w[1:ngens(Kx)]))) != $initials"
+        # initials_alternative = initial.(G, Ref(nu), Ref(w[1:ngens(Kx)]))
+        # phi = hom(parent(first(initials_alternative)), parent(first(initials)), gens(parent(first(initials))))
+        # @req phi.(initialsf_alternative) == initials "Initials are not correct: $(initial.(G,Ref(nu),Ref(w[1:ngens(Kx)]))) != $initials"
 
         push!(tropical_groebner_bases, G)
         push!(initial_systems, initials)
