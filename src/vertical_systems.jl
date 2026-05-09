@@ -161,7 +161,7 @@ function tropical_root_count_with_homotopy_data_vertical(F; perturbed_parameters
         G = substitute_y_by_perturbed_monomials.(G_linear)
         # initials_alternative = initial.(G, Ref(nu), Ref(w[1:ngens(Kx)]))
         # phi = hom(parent(first(initials_alternative)), parent(first(initials)), gens(parent(first(initials))))
-        # @req phi.(initialsf_alternative) == initials "Initials are not correct: $(initial.(G,Ref(nu),Ref(w[1:ngens(Kx)]))) != $initials"
+        # @req phi.(initials_alternative) == initials "Initials are not correct: $(initial.(G,Ref(nu),Ref(w[1:ngens(Kx)]))) != $initials"
 
         push!(tropical_groebner_bases, G)
         push!(initial_systems, initials)
